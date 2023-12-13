@@ -15,7 +15,7 @@ int main(void)
 	char *command_part, *line, *corrected_line;
 	size_t size = 0;
 	ssize_t get;
-	int count_token_number = 0, i, value, command_executed;
+	int count_token_number = 0, i, value, command_executed = 0;
 
 	ptr = strtow_path(path);
 	while (1)

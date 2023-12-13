@@ -4,6 +4,7 @@
  * execute_command - searches for a command and execute it
  * @command_part: the string of the commmand passed
  * @ptr: the pointer to array of path created per directory
+ * @ptr2: the token passed
  *
  */
 void execute_command(char *command_part, char **ptr, char **ptr2)
