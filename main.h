@@ -19,7 +19,7 @@ char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 char **argv1(char *appended, char **ptr2);
-void execute_command(char *command_part, char **ptr, char **ptr2);
+void execute_command(char *command_part, char **ptr2);
 char *appender(char *path_part, char *command_part);
 char **envp1(char *appended);
 char *line_corrected(char *line);

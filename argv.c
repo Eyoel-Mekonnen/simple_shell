@@ -23,10 +23,6 @@ char **argv1(char *appended, char **ptr2)
 		{
 			string = appended;
 		}
-		else
-		{
-			string = ptr2[i];
-		}
 		while (string[count] != '\0')
 			count++;
 		*(argv + i) = malloc(sizeof(char) * (count + 1));

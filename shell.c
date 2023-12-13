@@ -7,14 +7,12 @@
 
 int main(void)
 {
-	char *path = getenv("PATH");
-	char **ptr, **ptr2;
+	char **ptr2;
 	char *command_part, *line, *corrected_line;
 	size_t size = 0;
 	ssize_t get;
-	int count_token_number = 0, i, command_executed = 0;
+	int command_executed = 0;
 
-	ptr = strtow_path(path);
 	while (1)
 	{
 		printf("($) ");
@@ -28,11 +26,9 @@ int main(void)
 			continue;
 		corrected_line = line_corrected(line);
 		ptr2 = strtow(corrected_line);
-		for (i = 0; ptr2[i] != NULL; i++)
-			count_token_number++;
 		command_part = ptr2[0];
 		if (!command_executed)
-			execute_command(command_part, ptr, ptr2);
+			execute_command(command_part, ptr2);
 	}
 	return (0);
 }

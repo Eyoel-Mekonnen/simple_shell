@@ -7,16 +7,14 @@
  * @ptr2: the token passed
  *
  */
-void execute_command(char *command_part, char **ptr, char **ptr2)
+void execute_command(char *command_part,  char **ptr2)
 {
 	char **argv, **envp;
 	char *appended;
 	struct stat filestat;
 	pid_t child1;
-	int i, status;
+	int status;
 
-	for (i = 0; ptr[i] != NULL; i++)
-	{
 		appended = command_part;
 		if (stat(appended, &filestat) == 0)
 		{
@@ -35,10 +33,11 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 			{
 
 				wait(&status);
-				break;
 			}
 		}
-		if (ptr[i + 1] == NULL)
-			perror(" :Command Not Found");
-	}
+		else
+		{
+			perror("./hsh: No such file or directory");
+			return;
+		}
 }
