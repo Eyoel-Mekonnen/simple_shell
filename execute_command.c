@@ -24,7 +24,10 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 			appended = command_part;
 		}
 		else if (command_part[0] != '/')
-			perror(":command not found")
+		{
+			perror("./hsh: No such file or directory");
+			return;
+		}
 		if (stat(appended, &filestat) == 0)
 		{
 			child1 = fork();
