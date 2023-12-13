@@ -7,15 +7,20 @@
  * @ptr2: the token passed
  *
  */
-void execute_command(char *command_part,  char **ptr2)
+void execute_command(char *command_part, char **ptr, char **ptr2)
 {
 	char **argv, **envp;
-	char *appended;
+	char *path_part, *appended;
 	struct stat filestat;
 	pid_t child1;
-	int status;
+	int i, status;
 
-		appended = command_part;
+	for (i = 0; ptr[i] != NULL; i++)
+	{
+		path_part = ptr[i];
+		appended = appender(path_part, command_part);
+		if (command_part[0] == '/')
+			appended = command_part;
 		if (stat(appended, &filestat) == 0)
 		{
 			child1 = fork();
@@ -33,11 +38,10 @@ void execute_command(char *command_part,  char **ptr2)
 			{
 
 				wait(&status);
+				break;
 			}
 		}
-		else
-		{
-			perror("./hsh: No such file or directory");
-			return;
-		}
+		if (ptr[i + 1] == NULL)
+			perror("./hsh ");
+	}
 }
