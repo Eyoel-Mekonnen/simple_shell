@@ -1,5 +1,5 @@
 #include "main.h"
-/**
+/***
  * main - check the code
  *
  * Return: Always 0 on success
@@ -7,8 +7,8 @@
 
 int main(void)
 {
-	cmd custom_commands[] = {{"exit", custom_exit}, {"env", custom_env},
-		{"setenv", custom_setenv},
+	cmd custom_commands[] = {{"exit", custom_exit}, {"env", custom_env}, 
+		{"setenv", custom_setenv}, 
 		{"unsetenv", custom_unsetenv}, {"cd", custom_cd}};
 	char *path = getenv("PATH");
 	char **ptr, **ptr2;
@@ -23,7 +23,7 @@ int main(void)
 		printf("($) ");
 		get = getline(&line, &size, stdin);
 		if (get == -1 || get == EOF)
-		{
+		{	
 			printf("\n");
 			exit(EXIT_FAILURE);
 		}
@@ -31,6 +31,8 @@ int main(void)
 			continue;
 		corrected_line = line_corrected(line);
 		ptr2 = strtow(corrected_line);
+		for (i = 0; ptr2[i] != NULL; i++)
+			count_token_number++;
 		command_part = ptr2[0];
 		for (i = 0; i < 5; i++)
 		{
