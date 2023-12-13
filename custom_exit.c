@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * custom_exit - exits the terminal
  * @ptr2: the stdin passed as pointer to a pointer

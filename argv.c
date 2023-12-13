@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * argv1 - creates the argv array of pointers for execve
  * @appended: the string to append

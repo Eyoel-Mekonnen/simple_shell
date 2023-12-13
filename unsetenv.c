@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * remover - removes a variable
  * @environ: the pointer of environ

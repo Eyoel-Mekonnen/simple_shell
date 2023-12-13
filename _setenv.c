@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * concatenator - concatenates and creates a new enviro
  * @environ: the environment variable passed

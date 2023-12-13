@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * appender - appends arguments passed by user
  * @path_part: handles the path

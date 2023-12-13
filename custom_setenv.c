@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * custom_setenv - wrapper function for setenv.
  * @ptr2: the token of input passed

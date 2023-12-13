@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * custom_cd - calls the chdir function
  * @ptr2: the tokenized input of user passed

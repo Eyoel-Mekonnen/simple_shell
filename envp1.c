@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * envp1 - creates the enviornment variable
  * @appended: appended
