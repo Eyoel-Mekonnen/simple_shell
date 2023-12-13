@@ -20,13 +20,15 @@ int main(void)
 	ptr = strtow_path(path);
 	while (1)
 	{
-		printf("$ ");
+		printf("($) ");
 		get = getline(&line, &size, stdin);
-		if (get == -1)
+		if (get == -1 || get == EOF)
 		{	
 			printf("\n");
 			exit(EXIT_FAILURE);
 		}
+		if (line == NULL || line[0] == '\n' || line[0] == ' ')
+			continue;
 		corrected_line = line_corrected(line);
 		ptr2 = strtow(corrected_line);
 		for (i = 0; ptr2[i] != NULL; i++)

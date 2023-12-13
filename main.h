@@ -11,13 +11,6 @@ typedef struct commands {
 	char *command;
 	void(*func)(char **ptr2);
 } cmd;
-
-typedef struct list_s {
-	char *str;
-	struct list_s *next;
-}list_s;
-size_t print_listint(const list_s *head);
-list_s *add_node_end(list_s **head, const char *str);
 char **strtow_path(char *str);
 char **strtow(char *str);
 int _strcmp(char *s1, const char *s2);
