@@ -10,24 +10,14 @@
 void execute_command(char *command_part, char **ptr, char **ptr2)
 {
 	char **argv, **envp;
-	char *path_part, *appended;
+	char *appended;
 	struct stat filestat;
 	pid_t child1;
 	int i, status;
 
 	for (i = 0; ptr[i] != NULL; i++)
 	{
-		path_part = ptr[i];
-		appended = appender(path_part, command_part);
-		if (command_part[0] == '/')
-		{
-			appended = command_part;
-		}
-		else if (command_part[0] != '/')
-		{
-			perror("./hsh: No such file or directory");
-			return;
-		}
+		appended = command_part;
 		if (stat(appended, &filestat) == 0)
 		{
 			child1 = fork();
