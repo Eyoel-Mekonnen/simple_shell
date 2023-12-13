@@ -20,7 +20,7 @@ int main(void)
 	ptr = strtow_path(path);
 	while (1)
 	{
-		printf("#cisfun$ ");
+		printf("$ ");
 		get = getline(&line, &size, stdin);
 		if (get == -1)
 		{	

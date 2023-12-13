@@ -41,6 +41,6 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 			}
 		}
 		if (ptr[i + 1] == NULL)
-			perror("Command Not Found");
+			perror(" :Command Not Found");
 	}
 }
