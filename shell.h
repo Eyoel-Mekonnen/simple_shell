@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
+#include <string.h>
 typedef struct commands {
 	char *command;
 	void(*func)(char **ptr2);

@@ -49,7 +49,7 @@ char ** concatenator(char **environ, char **environ2, char *combined, int tracke
  * @value: value of the variable
  * @overwrite: determines whether to overwrite or not
  *
- * Return: 1 on Success
+ * Return: 0 on Success
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {

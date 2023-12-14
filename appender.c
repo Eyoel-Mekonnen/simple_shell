@@ -16,6 +16,8 @@ char *appender(char *path_part, char *command_part)
 	while (command_part[length] != '\0')
 		length++;
 	appended = malloc(sizeof(char) * (count + length + 2));
+	if (appended == NULL)
+		return (NULL);
 	for (j = 0; path_part[j] != '\0'; j++)
 	{
 		if (path_part[j] != '\n')

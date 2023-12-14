@@ -20,11 +20,11 @@ int main(void)
 	ptr = strtow_path(path);
 	while (1)
 	{
-		printf("($) ");
+	 	if (isatty(STDIN_FILENO))
+            		printf("($) ");
 		get = getline(&line, &size, stdin);
-		if (get == -1 || get == EOF)
+		if (get == -1)
 		{	
-			printf("\n");
 			exit(EXIT_SUCCESS);
 		}
 		if (line == NULL || line[0] == '\n' || line[0] == ' ')
@@ -46,7 +46,9 @@ int main(void)
 
 		}
 		if (!command_executed)
+		{
 			execute_command(command_part, ptr, ptr2);
+		}
 	}
 	return (0);
 }
