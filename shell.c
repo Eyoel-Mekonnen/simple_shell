@@ -1,4 +1,14 @@
 #include "shell.h"
+void free_strtow(char **str_array) {
+    if (str_array != NULL) {
+        int i = 0;
+        while (str_array[i] != NULL) {
+            free(str_array[i]);
+            i++;
+        }
+        free(str_array);
+    }
+}
 /***
  * main - check the code
  *
@@ -17,6 +27,7 @@ int main(void)
 	ssize_t get;
 	int count_token_number = 0, i, value, command_executed = 0;
 
+	line = NULL;
 	ptr = strtow_path(path);
 	while (1)
 	{
@@ -25,12 +36,15 @@ int main(void)
 		get = getline(&line, &size, stdin);
 		if (get == -1)
 		{	
+			free(line);
+			free_strtow(ptr);
 			exit(EXIT_SUCCESS);
 		}
 		if (line == NULL || line[0] == '\n' || line[0] == ' ')
 			continue;
 		corrected_line = line_corrected(line);
 		ptr2 = strtow(corrected_line);
+		free(corrected_line);
 		for (i = 0; ptr2[i] != NULL; i++)
 			count_token_number++;
 		command_part = ptr2[0];
@@ -48,6 +62,7 @@ int main(void)
 		if (!command_executed)
 		{
 			execute_command(command_part, ptr, ptr2);
+			free_strtow(ptr2);
 		}
 	}
 	return (0);
