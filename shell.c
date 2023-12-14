@@ -25,7 +25,7 @@ int main(void)
 		if (get == -1 || get == EOF)
 		{	
 			printf("\n");
-			exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
 		}
 		if (line == NULL || line[0] == '\n' || line[0] == ' ')
 			continue;
