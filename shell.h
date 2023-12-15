@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
+#include <stddef.h>
 typedef struct commands {
 	char *command;
 	void(*func)(char **ptr2);
@@ -30,4 +31,5 @@ void custom_env(char **ptr2);
 void custom_setenv(char **ptr2);
 void custom_unsetenv(char **ptr2);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream); 
+void free_strtow(char **argv);
 #endif

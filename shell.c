@@ -23,7 +23,7 @@ int main(void)
 	while (1)
 	{
 	 	if (isatty(STDIN_FILENO))
-            		printf("($) ");
+            		printf("#cisfun$ ");
 		get = getline(&line, &size, stdin);
 		if (get == -1)
 		{	
