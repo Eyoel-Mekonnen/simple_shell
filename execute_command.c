@@ -9,8 +9,8 @@
  */
 void execute_command(char *command_part, char **ptr, char **ptr2)
 {
-	char **argv, **envp;
-	char *path_part, *appended;
+	char **argv, **envp, **argv2, **envp2;
+	char *path_part, *appended = NULL;
 	struct stat filestat;
 	pid_t child1;
 	int i, status;
@@ -20,7 +20,15 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 		path_part = ptr[i];
 		appended = appender(path_part, command_part);
 		if (command_part[0] == '/')
+		{
+			path_part = "";
 			appended = command_part;
+		}
+		else
+		{
+			path_part = ptr[i];
+			appended = appender(path_part, command_part);
+		}
 		if (stat(appended, &filestat) == 0)
 		{
 			child1 = fork();
@@ -32,16 +40,28 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 			{
 				argv = argv1(appended, ptr2);
 				envp = envp1(appended);
-				execve(argv[0], argv, envp);
+				argv2 = argv;
+				envp2 = envp;
+				free(appended);/**freed**/
+				free_strtow(argv);/**write function**/
+				free_strtow(envp); /**wrte function**/
+				execve(argv2[0], argv2, envp2);
+				perror("Execve");
+				exit(EXIT_FAILURE);
 			}
 			else
 			{
 
+				
 				wait(&status);
 				break;
 			}
 		}
 		if (ptr[i + 1] == NULL)
 			perror(" :Command Not Found");
+		if (command_part[0] != '/')
+		{
+			free(appended);
+		}
 	}
 }

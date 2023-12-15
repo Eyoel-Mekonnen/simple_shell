@@ -1,14 +1,5 @@
 #include "shell.h"
-void free_strtow(char **str_array) {
-    if (str_array != NULL) {
-        int i = 0;
-        while (str_array[i] != NULL) {
-            free(str_array[i]);
-            i++;
-        }
-        free(str_array);
-    }
-}
+
 /***
  * main - check the code
  *
@@ -41,7 +32,11 @@ int main(void)
 			exit(EXIT_SUCCESS);
 		}
 		if (line == NULL || line[0] == '\n' || line[0] == ' ')
+		{
+			free(line);
+			line = NULL;
 			continue;
+		}
 		corrected_line = line_corrected(line);
 		ptr2 = strtow(corrected_line);
 		free(corrected_line);
@@ -64,6 +59,10 @@ int main(void)
 			execute_command(command_part, ptr, ptr2);
 			free_strtow(ptr2);
 		}
+		free_strtow(ptr2);
+		free(line);
+		line = NULL;
 	}
+	free_strtow(ptr);
 	return (0);
 }

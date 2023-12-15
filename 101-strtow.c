@@ -88,7 +88,9 @@ char **strtow(char *str)
 		return (NULL);
 	for (len = 0; (str[len] != '\0'); len++)
 	count = counter(str);
-	ptr = (char **)malloc(sizeof(char *) * (count + 1));
+	ptr = malloc(sizeof(char *) * (count + 1));
+	printf("%d\n", count);
+	printf("%ld\n", sizeof(ptr));
 	if (ptr == NULL)
 		return (NULL);
 	while (i <= len - 1)

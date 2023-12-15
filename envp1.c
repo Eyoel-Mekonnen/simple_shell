@@ -11,7 +11,7 @@ char **envp1(char *appended)
 	char **envp;
 	int count = 0, count_appended = 0, i, j;
 
-	envgetter = _getenv("HOME");
+	envgetter = getenv("HOME");
 	while (appended[count_appended] != '\0')
 		count_appended++;
 	envp = malloc(sizeof(char *) * 3);
