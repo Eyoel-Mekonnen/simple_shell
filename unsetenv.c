@@ -10,7 +10,7 @@
 char **remover(char ** environ, char **environ2, int tracker)
 {
 	char *string;
-	int i, j, count, k = 0;
+	int i, j, count, k = 0, l;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
@@ -27,6 +27,15 @@ char **remover(char ** environ, char **environ2, int tracker)
 		while (string[count] != '\0')
 			count++;
 		*(environ2 + k) = malloc(sizeof(char) * (count + 1));
+		if (environ2[k] == NULL)
+		{
+			for (l = 0; l < k; l++)
+			{
+				free(environ2[l]);
+			}
+			free(environ2);
+			return (NULL);
+		}
 		for (j = 0; j < count; j++)
 		{
 			*(*(environ2 + k) + j) = string[j];
@@ -35,6 +44,11 @@ char **remover(char ** environ, char **environ2, int tracker)
 		k++;
 	}
 	*(environ2 + k) = '\0';
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		free(environ[i]);
+	}
+	free(environ);
 	return (environ2);
 }
 /**
@@ -58,6 +72,8 @@ int _unsetenv(const char *name)
 		{
 			tracker = i;
 			environ2 = malloc(sizeof(char *) * count_environ);
+			if (environ2 == NULL)
+				return (-1);
 			environ = remover(environ, environ2, tracker);
 			break;
 		}

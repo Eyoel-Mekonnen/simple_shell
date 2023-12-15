@@ -11,7 +11,7 @@
 char ** concatenator(char **environ, char **environ2, char *combined, int tracker)
 {
 	char *string;
-	int i, j, count;
+	int i, j, count, k;
 	
 	for (i = 0; environ[i] != NULL; i++)
 	{
@@ -28,6 +28,16 @@ char ** concatenator(char **environ, char **environ2, char *combined, int tracke
 		while (string[count] != '\0')
 			count++;
 		*(environ2 + i) = malloc(sizeof(char) * (count + 1));
+		if (environ2[i] == NULL)
+		{
+			perror("malloc failed for environ2 element");
+			for (k = 0; k < i; k++)
+			{
+				free(environ2[k]);
+			}
+			free(environ2);
+			return (NULL);
+		}
 		for (j = 0; j < count; j++)
 		{
 			*(*(environ2 + i) + j) = string[j];
@@ -41,6 +51,11 @@ char ** concatenator(char **environ, char **environ2, char *combined, int tracke
 	}
 	
 	*(environ2 + i) = '\0';
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		free(environ[i]);
+	}
+	free(environ);
 	return (environ2);
 }
 /**
@@ -89,11 +104,17 @@ int _setenv(const char *name, const char *value, int overwrite)
 			if (valued != 0)
 				count_environ++;
 			environ2 = malloc(sizeof(char *) * (count_environ + 1));
+			if (environ2 == NULL)
+			{
+				perror("malloc failed for environ2");
+				free(combined);
+			}
 			environ = concatenator(environ, environ2, combined, tracker);
 			break;
 		}
 		else if (valued == 0)
 			continue;
 	}
+	free(combined);
 	return (0);
 }

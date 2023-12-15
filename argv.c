@@ -9,12 +9,15 @@
 char **argv1(char *appended, char **ptr2)
 {
 	char *string;
-	int i, j, count = 0, count_token = 0;
+	int i, j, count = 0, count_token = 0, k;
 	char **argv;
 	
 	for (i = 0; ptr2[i] != NULL; i++)
 		count_token++;
 	argv = malloc(sizeof(char *) * (count_token + 1));
+	if (argv == NULL)
+		return (NULL);
+
 	for (i = 0; ptr2[i] != NULL; i++)
 	{
 		j = 0;
@@ -30,6 +33,13 @@ char **argv1(char *appended, char **ptr2)
 		while (string[count] != '\0')
 			count++;
 		*(argv + i) = malloc(sizeof(char) * (count + 1));
+		if (!argv[i])
+		{
+			for (k = 0; k < i; k++)
+				free(argv[k]);
+			free(argv);
+			return (NULL);
+		}
 		for (j = 0; j < count; j++)
 		{
 			*(*(argv + i) + j) = string[j];
@@ -37,5 +47,6 @@ char **argv1(char *appended, char **ptr2)
 		*(*(argv + i) + j) = '\0';
 	}
 	*(argv + i) = NULL;
+
 	return (argv);
 }

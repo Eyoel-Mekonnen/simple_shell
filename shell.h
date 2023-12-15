@@ -32,4 +32,6 @@ void custom_setenv(char **ptr2);
 void custom_unsetenv(char **ptr2);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream); 
 void free_strtow(char **argv);
+char **strtowa(char *str);
+char **strtow1(char *str);
 #endif

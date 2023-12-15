@@ -9,12 +9,14 @@ char **envp1(char *appended)
 {
 	char *envgetter, *string;
 	char **envp;
-	int count = 0, count_appended = 0, i, j;
+	int count = 0, count_appended = 0, i, j, k;
 
 	envgetter = getenv("HOME");
 	while (appended[count_appended] != '\0')
 		count_appended++;
 	envp = malloc(sizeof(char *) * 3);
+	if (envp == NULL)
+		return (NULL);
 	for (i = 0; i < 2; i++)
 	{
 		j = 0;
@@ -32,6 +34,13 @@ char **envp1(char *appended)
 			count++;
 		}
 		*(envp + i) = malloc(sizeof(char) * (count + 1));
+		if (!envp[i])
+		{
+			for (k = 0; k < i; k++)
+				free(envp[k]);
+			free(envp);
+			return (NULL);
+		}
 		for (j = 0; j < count; j++)
 		{
 			*(*(envp + i) + j) = string[j];
