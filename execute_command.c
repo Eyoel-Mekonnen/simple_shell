@@ -89,7 +89,6 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 		else if ((command_part[0] == '.') || (command_part[0] == '.' && command_part[1] == '.'))
 		{
 			appended = absolute_path(command_part);
-			printf("appended is %s\n", appended);
 			if (appended == NULL)
 			{
 				free(appended);
