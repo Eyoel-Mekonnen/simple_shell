@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stddef.h>
+#include <limits.h>
 typedef struct commands {
 	char *command;
 	void(*func)(char **ptr2, char **ptr);
@@ -34,4 +35,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void free_strtow(char **argv);
 char **strtowa(char *str);
 char **strtow1(char *str);
+char *_strcat(char *dest, char *src);
+char **strtow_directory(char *str);
 #endif

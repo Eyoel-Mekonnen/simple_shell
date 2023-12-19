@@ -6,7 +6,7 @@
  *
  * Return: the counts of the word
  */
-int counter(char *str)
+int counter_1a(char *str)
 {
 	int len = 0, i = 0, count = 0;
 
@@ -14,17 +14,15 @@ int counter(char *str)
 		return (0);
 	while (str[len] != '\0')
 		len++;
-	if (len == 1)
-		return (count);
 	while (i < len - 1)
 	{
-		if (str[i] == ' ')
+		if (str[i] == '/')
 			i++;
-		else if (str[i] != ' ' || str[i] != '\0')
+		else if (str[i] != '/' || str[i] != '\0')
 		{
-			while (str[i] != ' ' || str[i] != '\0')
+			while (str[i] != '/' || str[i] != '\0')
 			{
-				if (str[i] == ' ' || str[i] == '\0')
+				if (str[i] == '/' || str[i] == '\0')
 				{
 					count++;
 					break;
@@ -43,12 +41,12 @@ int counter(char *str)
  *
  * Return: i as an integer value
  */
-int count_i(char *str, int i)
+int count_i1a(char *str, int i)
 {
-	while (str[i] != ' ' || str[i] != '\0')
+	while (str[i] != '/' || str[i] != '\0')
 	{
 		i++;
-		if (str[i] == ' ' || str[i] == '\0')
+		if (str[i] == '/' || str[i] == '\0')
 			break;
 	}
 	return (i);
@@ -60,26 +58,26 @@ int count_i(char *str, int i)
  *
  * Return: the word count
  */
-int word_count(char *str, int i)
+int word_count1a(char *str, int i)
 {
 	int wordcount = 0;
 
-	while (str[i] != ' ' || str[i] != '\0')
+	while (str[i] != '/' || str[i] != '\0')
 	{
 		wordcount++;
 		i++;
-		if (str[i] == ' ' || str[i] == '\0')
+		if (str[i] == '/' || str[i] == '\0')
 			break;
 	}
 	return (wordcount);
 }
 /**
- * strtow - splits strings into words
+ * strtow_path - splits strings into words
  * @str: the string
  *
  * Return: pointer to dynamic memory
  */
-char **strtow(char *str)
+char **strtow_directory(char *str)
 {
 	int i = 0, count = 0, len = 0, wordcount, setter, j = 0, flag;
 	char **ptr;
@@ -87,29 +85,31 @@ char **strtow(char *str)
 	if (str == NULL)
 		return (NULL);
 	for (len = 0; (str[len] != '\0'); len++)
-	count = counter(str);
-	ptr = malloc(sizeof(char *) * (count + 1));
+	count = counter_1a(str);
+	if (count == 0)
+		return (NULL);
+	ptr = (char **)malloc(sizeof(char *) * (count + 1));
 	if (ptr == NULL)
 		return (NULL);
-	while (i <= len - 1)
-	{
-		if (str[i] == ' ')
+	while (i < len - 1)
+	{	
+		if (str[i] == '/')
 			i++;
-		else if (str[i] != ' ' && str[i] != '\0')
+		else if (str[i] != '/' || str[i] != '\0')
 		{
-			wordcount = word_count(str, i);
-			i = count_i(str, i);
+			wordcount = word_count1a(str, i);
+			i = count_i1a(str, i);
 			*(ptr + j) = (char *)malloc((wordcount + 1) * sizeof(char));
 			if (*(ptr + j) == NULL)
-			{
+                        {
 				free_strtow(ptr);
-				return (NULL);
-			}
+                                return (NULL);
+                        }
 			flag = i - wordcount;
 			setter = 0;
 			for (; (wordcount > 0); ++setter)
 			{
-				if (str[flag] == ' ' || str[flag] == '\0')
+				if (str[flag] == '/' || str[flag] == '\0')
 					break;
 				(*(*(ptr + j) + setter)) = str[flag];
 				flag++;
@@ -117,7 +117,7 @@ char **strtow(char *str)
 			(*(*(ptr + j) + (setter))) = '\0';
 			j++;
 		}
+		*(ptr + j) = NULL;
 	}
-	ptr[j] = NULL;
 	return (ptr);
 }

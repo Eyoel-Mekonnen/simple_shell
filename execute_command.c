@@ -1,5 +1,66 @@
 #include "shell.h"
 #include <unistd.h>
+char *concatenate1(char **absolute_path, char **relative_path, int count)
+{
+	char *absolute_command1 = NULL;
+	int i;
+
+	absolute_command1 = malloc(sizeof(char) * (PATH_MAX));
+	absolute_command1[0] = '\0';
+	if (count <= 0)
+	{
+		absolute_command1 = _strcat(absolute_command1, "/");
+	}
+
+	if (count > 0)
+	{
+		for (i = 0; i < count; i++)
+		{
+			absolute_command1 = _strcat(absolute_command1, absolute_path[i]);
+			absolute_command1 = _strcat(absolute_command1, "/");
+		}
+	}
+	for (i = 0; relative_path[i] != NULL; i++)
+	{
+		if (_strcmp1(relative_path[i], "..") != 0 && _strcmp1(relative_path[i], ".") != 0)
+		{
+		       absolute_command1 = _strcat(absolute_command1, relative_path[i]);
+		       if (count >0)
+		       		absolute_command1 = _strcat(absolute_command1, "/");
+		}	
+	}
+	free_strtow(absolute_path);
+	free_strtow(relative_path);
+	return (absolute_command1);
+}
+char *absolute_path(char *command_part)
+{
+	char cwd[PATH_MAX];
+	char **absolute_path, **relative_path;
+	int i, count_relative = 0, count_absolute = 0, count, value;
+	char *absolute_command;
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		perror("getcwd() error");
+		return (NULL);
+	}
+	absolute_path = strtow_directory(cwd);
+	relative_path = strtow_directory(command_part);
+	for (i = 0; relative_path[i] != NULL; i++)
+	{
+		value = _strcmp1(relative_path[i], "..");
+		if (value == 0)
+			count_relative++;
+	}
+	for (i = 0; absolute_path[i] != NULL; i++)
+	{
+		count_absolute++;
+	}
+	count = count_absolute - count_relative;
+	absolute_command = concatenate1(absolute_path, relative_path, count);
+	return (absolute_command);
+}
 /**
  * execute_command - searches for a command and execute it
  * @command_part: the string of the commmand passed
@@ -24,6 +85,17 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 		{
 			path_part = "";
 			appended = command_part;
+		}
+		else if ((command_part[0] == '.') || (command_part[0] == '.' && command_part[1] == '.'))
+		{
+			appended = absolute_path(command_part);
+			printf("appended is %s\n", appended);
+			if (appended == NULL)
+			{
+				free(appended);
+				perror("Memory allocation failed for appended");
+				break;
+			}
 		}
 		else
 		{
