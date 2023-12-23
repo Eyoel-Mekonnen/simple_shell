@@ -7,11 +7,11 @@
  *
  * Retrun: Address of environ2
  */
-char **remover(char ** environ, char **environ2, int tracker)
+char **remover(char **environ, char **environ2, int tracker)
 {
 	char *string;
 	int i, j, k = 0, count;
-
+	
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		j = 0;
@@ -39,26 +39,21 @@ char **remover(char ** environ, char **environ2, int tracker)
 		*(*(environ2 + k) + j) = '\0';
 		k++;
 	}
-	*(environ2 + k) = '\0';
-	for (i = 0; environ[i] != NULL; i++)
-	{
-		free(environ[i]);
-	}
-	free(environ);
+	*(environ2 + k) = NULL;
 	return (environ2);
 }
 /**
  * _unsetenv - deletes a variable from the environment
  * @name: name of the environment you want to delete
  *
- * Return: 1 on Success
+ * Return: 0 on Success
  */
 int _unsetenv(const char *name)
 {
 	extern char **environ;
 	char **environ2;
-	int i, tracker = 0, count_environ = 0, valued;
-
+	int i, tracker = -1, count_environ = 0, valued;
+	
 	while (environ[count_environ] != NULL)
 		count_environ++;
 	for (i = 0; *(environ + i) != NULL; i++)
@@ -70,11 +65,15 @@ int _unsetenv(const char *name)
 			environ2 = malloc(sizeof(char *) * count_environ);
 			if (environ2 == NULL)
 				return (-1);
-			environ = remover(environ, environ2, tracker);
+			environ2 = remover(environ, environ2, tracker);
+			free_strtow(environ);
+			environ = environ2;
 			break;
 		}
 		else if (valued != 0)
 			continue;
 	}
+	if (tracker == -1)
+		free(environ2);
 	return (0);
 }

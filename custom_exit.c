@@ -8,5 +8,5 @@ void custom_exit(char **ptr2 __attribute__((unused)), char **ptr)
 {
 	free_strtow(ptr2);
 	free_strtow(ptr);
-	exit(0);
+	exit(2);
 }

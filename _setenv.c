@@ -8,7 +8,7 @@
  * @tracker: the index of the envirnomnet to be overwritten
  *
  */
-char ** concatenator(char **environ, char **environ2, char *combined, int tracker)
+char **concatenator(char **environ, char **environ2, char *combined, int tracker)
 {
 	char *string;
 	int i, j, count;
@@ -17,7 +17,7 @@ char ** concatenator(char **environ, char **environ2, char *combined, int tracke
 	{
 		j = 0;
 		count = 0;
-		if ((tracker != 0) && (tracker == i))
+		if (tracker == i)
 		{
 			string = combined;
 		}
@@ -40,18 +40,13 @@ char ** concatenator(char **environ, char **environ2, char *combined, int tracke
 		}
 		*(*(environ2 + i) + j) = '\0';
 	}
-	if (tracker == 0)
+	if (tracker == -1)
 	{
 		*(environ2 + i) = combined;
 		i++;
 	}
-	
-	*(environ2 + i) = '\0';
-	for (i = 0; environ[i] != NULL; i++)
-	{
-		free(environ[i]);
-	}
-	free(environ);
+	free_strtow(environ);
+	environ = NULL;	
 	return (environ2);
 }
 /**
@@ -68,7 +63,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 	char **environ2;
 	char *combined;
 	int valued;
-	int i, j, count_environ = 0, count_name = 0, count_value = 0, tracker = 0, combined_size;
+	int i, j, count_environ = 0, count_name = 0, count_value = 0, tracker = -1, combined_size;
 	
 	while (environ[count_environ] != NULL)
 		count_environ++;

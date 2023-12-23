@@ -13,6 +13,10 @@ typedef struct commands {
 	char *command;
 	void(*func)(char **ptr2, char **ptr);
 } cmd;
+typedef struct list_s {
+	char *str;
+	struct list_s *next;
+} list_s;
 char **strtow_path(char *str);
 char **strtow(char *str);
 int _strcmp(char *s1, const char *s2);

@@ -16,7 +16,7 @@ int main(void)
 	char *command_part, *line, *corrected_line;
 	size_t size = 0;
 	ssize_t get;
-	int count_token_number = 0, i, value, command_executed = 0;
+	int count_token_number = 0, i, value, command_executed = 0, trim = 0;
 
 	line = NULL;
 	ptr = strtow_path(path);
@@ -31,13 +31,19 @@ int main(void)
 			free_strtow(ptr);	
 			exit(EXIT_SUCCESS);
 		}
+		if (line[0] == ' ')
+		{
+			while (line[trim] == ' ')
+				trim++;
+		}
 		if (line == NULL || line[0] == '\n')
 		{
 			free(line);
 			line = NULL;
 			continue;
 		}
-		corrected_line = line_corrected(line);
+		corrected_line = line_corrected(line + trim);
+		trim = 0;
 		free(line);
 		ptr2 = strtow(corrected_line);
 		free(corrected_line);
