@@ -16,7 +16,7 @@ void custom_setenv(char **ptr2, char **ptr __attribute__((unused)))
 	}
 	if (argument_count == 3)
 	{
-		result = setenv(ptr2[1], ptr2[2], overwrite);
+		result = _setenv(ptr2[1], ptr2[2], overwrite);
 		if (result != 0)
 			printf("Error setting Environment Variable\n");
 	}

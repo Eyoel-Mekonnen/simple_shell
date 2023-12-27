@@ -8,14 +8,13 @@
  * @tracker: the index of the envirnomnet to be overwritten
  *
  */
-char **concatenator(char **environ, char **environ2, char *combined, int tracker)
+void concatenator(char **custom_environment, char **environ2, char *combined, int tracker)
 {
 	char *string;
 	int i, j, count;
 	
-	for (i = 0; environ[i] != NULL; i++)
+	for (i = 0; custom_environment[i] != NULL; i++)
 	{
-		j = 0;
 		count = 0;
 		if (tracker == i)
 		{
@@ -23,7 +22,7 @@ char **concatenator(char **environ, char **environ2, char *combined, int tracker
 		}
 		else
 		{
-			string = environ[i];
+			string = custom_environment[i];
 		}
 		while (string[count] != '\0')
 			count++;
@@ -32,7 +31,7 @@ char **concatenator(char **environ, char **environ2, char *combined, int tracker
 		{
 			free_strtow(environ2);
 			perror("malloc failed for environ2 element");
-			return (NULL);
+			return;
 		}
 		for (j = 0; j < count; j++)
 		{
@@ -42,12 +41,24 @@ char **concatenator(char **environ, char **environ2, char *combined, int tracker
 	}
 	if (tracker == -1)
 	{
-		*(environ2 + i) = combined;
+		count = 0;
+		while(combined[count] != '\0')
+			count++;
+		*(environ2 + i) = malloc(sizeof(char) * (count + 1));
+		if (*(environ2 + i) == NULL)
+		{
+			free_strtow(environ2);
+			perror("malloc failed for environ2 element");
+			return;
+		}
+		for (j = 0; j < count; j++)
+		{
+			*(*(environ2 + i) + j) = combined[j];
+		}
+		*(*(environ2 + i) + j) = '\0';
 		i++;
 	}
-	free_strtow(environ);
-	environ = NULL;	
-	return (environ2);
+	*(environ2 + i) = NULL;
 }
 /**
  * _setenv - sets an environment variable
@@ -59,13 +70,15 @@ char **concatenator(char **environ, char **environ2, char *combined, int tracker
  */
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	extern char **environ;
+	/**
+	extern char **custom_environment;
+	**/
 	char **environ2;
 	char *combined;
 	int valued;
 	int i, j, count_environ = 0, count_name = 0, count_value = 0, tracker = -1, combined_size;
 	
-	while (environ[count_environ] != NULL)
+	while (custom_environment[count_environ] != NULL)
 		count_environ++;
 	while (name[count_name] != '\0')
 		count_name++;
@@ -87,9 +100,9 @@ int _setenv(const char *name, const char *value, int overwrite)
 		i++;
 	}
 	combined[i] = '\0';
-	for (i = 0; *(environ + i) != NULL; i++)
+	for (i = 0; *(custom_environment + i) != NULL; i++)
 	{
-		valued = _strcmp(environ[i], name);
+		valued = _strcmp(custom_environment[i], name);
 		if ((valued == 0 && overwrite != 0) || valued != 0)
 		{
 			if (valued == 0)
@@ -102,7 +115,11 @@ int _setenv(const char *name, const char *value, int overwrite)
 				perror("malloc failed for environ2");
 				free(combined);
 			}
-			environ = concatenator(environ, environ2, combined, tracker);
+			concatenator(custom_environment, environ2, combined, tracker);
+			free_strtow(custom_environment);
+			custom_environment = NULL;
+			custom_environment = environ2;
+			environ2 = NULL;
 			break;
 		}
 		else if (valued == 0)

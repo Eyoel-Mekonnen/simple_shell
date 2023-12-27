@@ -12,10 +12,10 @@ void custom_unsetenv(char **ptr2, char **ptr __attribute__((unused)))
 		argument_count++;
 	if (argument_count != 2)
 	{
-		printf("Usage: unsetenv VARIABLE_NAME\n");
 		return;
 	}
 	result = _unsetenv(ptr2[1]);
-	if (result != 0)
-		printf("Error unsetting environment variable\n");
+	if (result != 0 && result != 1)
+		printf("Error setting Environment Variable\n");
+
 }
