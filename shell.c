@@ -5,7 +5,7 @@
  *
  * Return: Always 0 on success
  */
-
+char **custom_environment = NULL;
 int main(void)
 {
 	cmd custom_commands[] = {{"exit", custom_exit}, {"env", custom_env}, 
@@ -17,7 +17,8 @@ int main(void)
 	size_t size = 0;
 	ssize_t get;
 	int count_token_number = 0, i, value, command_executed = 0, trim = 0;
-
+	
+	intialize_env();	
 	line = NULL;
 	ptr = strtow_path(path);
 	while (1)
@@ -72,5 +73,10 @@ int main(void)
 	}
 	free_strtow(ptr);
 	ptr = NULL;
+	for (i = 0; custom_environment[i] != NULL; i++)
+	{
+		free(custom_environment[i]);
+	}
+	free(custom_environment);
 	return (0);
 }

@@ -50,30 +50,35 @@ char **remover(char **environ, char **environ2, int tracker)
  */
 int _unsetenv(const char *name)
 {
-	extern char **environ;
+	extern char **custom_environment;
 	char **environ2;
-	int i, tracker = -1, count_environ = 0, valued;
+	int i, tracker = -1, count_environ = 0, valued = -1;
 	
-	while (environ[count_environ] != NULL)
+	while (custom_environment[count_environ] != NULL)
 		count_environ++;
-	for (i = 0; *(environ + i) != NULL; i++)
+	for (i = 0; *(custom_environment + i) != NULL; i++)
 	{
-		valued = _strcmp(environ[i], name);
+		valued = _strcmp(custom_environment[i], name);
 		if (valued == 0)
 		{
 			tracker = i;
 			environ2 = malloc(sizeof(char *) * count_environ);
 			if (environ2 == NULL)
+			{	
+				free(environ2);
 				return (-1);
-			environ2 = remover(environ, environ2, tracker);
-			free_strtow(environ);
-			environ = environ2;
+			}
+			environ2 = remover(custom_environment, environ2, tracker);
+			for (i = 0; custom_environment[i] != NULL; i++)
+			{
+				free(custom_environment[i]);
+			}
+			free(custom_environment);
+			custom_environment = NULL;
+			custom_environment = environ2;
+			environ2 = NULL;
 			break;
 		}
-		else if (valued != 0)
-			continue;
 	}
-	if (tracker == -1)
-		free(environ2);
 	return (0);
 }

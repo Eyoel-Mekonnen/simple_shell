@@ -9,14 +9,12 @@
 #include <string.h>
 #include <stddef.h>
 #include <limits.h>
+
+extern char **custom_environment;
 typedef struct commands {
 	char *command;
 	void(*func)(char **ptr2, char **ptr);
 } cmd;
-typedef struct list_s {
-	char *str;
-	struct list_s *next;
-} list_s;
 char **strtow_path(char *str);
 char **strtow(char *str);
 int _strcmp(char *s1, const char *s2);
@@ -41,4 +39,5 @@ char **strtowa(char *str);
 char **strtow1(char *str);
 char *_strcat(char *dest, char *src);
 char **strtow_directory(char *str);
+void intialize_env();
 #endif

@@ -6,6 +6,9 @@
  */
 void custom_exit(char **ptr2 __attribute__((unused)), char **ptr)
 {
+	extern char **custom_environment;
+
+	free_strtow(custom_environment);
 	free_strtow(ptr2);
 	free_strtow(ptr);
 	exit(2);

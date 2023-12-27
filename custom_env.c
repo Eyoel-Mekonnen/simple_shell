@@ -6,10 +6,11 @@
  */
 void custom_env(char **ptr2 __attribute__((unused)), char **ptr __attribute((unused)))
 {
-	extern char **environ;
+	extern char**custom_environment;
 	int i;
-	for (i = 0; environ[i] != NULL; i++)
+
+	for (i = 0; custom_environment[i] != NULL; i++)
 	{
-		printf("%s\n", environ[i]);
+		printf("%s\n", custom_environment[i]);
 	}
 }
