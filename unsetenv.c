@@ -40,6 +40,11 @@ char **remover(char **environ, char **environ2, int tracker)
 		k++;
 	}
 	*(environ2 + k) = NULL;
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		free(environ[i]);
+	}
+	free(environ);
 	return (environ2);
 }
 /**
@@ -65,9 +70,7 @@ int _unsetenv(const char *name)
 			environ2 = malloc(sizeof(char *) * count_environ);
 			if (environ2 == NULL)
 				return (-1);
-			environ2 = remover(environ, environ2, tracker);
-			free_strtow(environ);
-			environ = environ2;
+			environ = remover(environ, environ2, tracker);
 			break;
 		}
 		else if (valued != 0)
