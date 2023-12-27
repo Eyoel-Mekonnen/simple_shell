@@ -221,9 +221,8 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 			if (ptr[i + 1] == NULL)
 			{
 				fprintf(stderr, "./hsh: 1: %s: not found\n", command_part);
-				/**
+
 				exit(127);
-				**/
 			}
 		
 		}
@@ -231,8 +230,6 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 	else
 	{
 		fprintf(stderr, "./hsh: 1: %s: not fount\n", command_part);
-		/**
 		exit(127);
-		**/
 	}
 }
