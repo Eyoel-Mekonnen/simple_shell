@@ -140,6 +140,7 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 	}
 	else if (!(ptr == NULL || ptr[0] == NULL || ptr[0][0] == '\0'))
 	{
+		
 		for (i = 0; ptr[i] != NULL; i++)
 		{
 			path_part = ptr[i];
@@ -157,7 +158,7 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 					perror("Memory allocation failed for appended");
 				}
 			}
-			else if ((command_part[0] == '.' && command_part[1] == '\0') || (command_part[0] == '.' && command_part[1] == '.'))
+			else if ((command_part[0] == '.' && command_part[1] == '/') || (command_part[0] == '.' && command_part[1] == '.'))
 			{
 				appended = absolute_path(command_part);
 				if (appended == NULL)
@@ -224,12 +225,11 @@ void execute_command(char *command_part, char **ptr, char **ptr2)
 
 				exit(127);
 			}
-		
 		}
 	}
 	else
 	{
-		fprintf(stderr, "./hsh: 1: %s: not fount\n", command_part);
+		fprintf(stderr, "./hsh: 1: %s: not found\n", command_part);
 		exit(127);
 	}
 }
